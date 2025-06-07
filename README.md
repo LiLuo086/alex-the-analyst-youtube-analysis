@@ -27,9 +27,10 @@ This case study showcases data analyst competencies including SQL, Python, Postg
 ---
 
 ## 📁 Project Structure
+```
 📂 youtube-data-analytics
-├── 📄 README.md
-├── 📜 requirements.txt
+├── 📄 README.md 
+├── 📜 requirements.txt  
 ├── 🐍 youtube_data_scraper.py
 ├── 🗃️ database_schema.sql
 ├── 📂 sql_queries/
@@ -40,3 +41,4 @@ This case study showcases data analyst competencies including SQL, Python, Postg
 │ └── videos.csv
 └── 📂 reports/
 └── insights_summary.pdf
+```
