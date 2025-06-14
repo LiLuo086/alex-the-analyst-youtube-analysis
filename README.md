@@ -31,7 +31,7 @@ This case study showcases data analyst competencies including SQL, Python, Postg
 
 ## 📁 Project Structure
 
-```
+bash```
 📂 alex-the-analyst-youtube-analysis
 ├── 📄 README.md 
 ├── 📜 requirements.txt  
@@ -44,8 +44,8 @@ This case study showcases data analyst competencies including SQL, Python, Postg
 ├── 📂 data/
 │ └── videos.csv
 └── 📂 reports/
-└── insights_summary.pdf                              
-```
+└── insights_summary.pdf
+bash```
 
 ---
 
