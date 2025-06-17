@@ -1,7 +1,8 @@
 -- Get an overview of the data
 SELECT * FROM videos LIMIT 10;
 
-
+---------------------
+-- General Statistics
 -- Check the completeness of video data
 SELECT
 	COUNT(*),
@@ -26,5 +27,8 @@ SELECT
 FROM
 	videos;
 
-SELECT * FROM videos where duration_seconds = 9;
+	
+----------------------
+-- Univariate Analysis
+
 
