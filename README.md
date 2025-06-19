@@ -38,7 +38,9 @@ This case study showcases data analyst competencies including SQL, Python, Postg
 ├── 🐍 data_collection.ipynb
 ├── 🗃️ database_schema.sql
 ├── 📂 sql_queries/
+│ └── data_cleaning.sql
 │ └── eda_queries.sql
+│ └── feature_engineering.sql
 ├── 📂 visualizations/
 │ └── alex_channel_dashboard.twbx
 ├── 📂 data/
