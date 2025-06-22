@@ -56,3 +56,5 @@ UPDATE videos_cleaned
 SET
 	tags_array = string_to_array(REPLACE(REPLACE(REPLACE(tags, '[',''),']',''),'''',''),', '); 
 
+ALTER TABLE videos_cleaned
+DROP COLUMN tags;
