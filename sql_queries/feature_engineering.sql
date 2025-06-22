@@ -5,47 +5,57 @@
 CREATE TABLE videos_featured AS
 SELECT * FROM videos_cleaned;
 
-SELECT * FROM videos_featured LIMIT 10;
+SELECT * FROM videos_featured LIMIT 100;
 
 
 
--- 2. Extract weekday and hours from publish date and time
--- Convert publish timestamp to local us/east time
-ALTER TABLE videos_featured ADD COLUMN published_us_est TIMESTAMP WITHOUT TIME ZONE;
+-- 2. Add derived datetime features (in US Eastern Time)
+ALTER TABLE videos_featured 
+ADD COLUMN published_us_est TIMESTAMP WITHOUT TIME ZONE,
+ADD COLUMN published_year INTEGER,
+ADD COLUMN published_month INTEGER,
+ADD COLUMN published_quarter TEXT,
+ADD COLUMN published_weekday TEXT,
+ADD COLUMN published_hour INTEGER;
+
+-- Convert timestamp to US Eastern and extract features
 UPDATE videos_featured
-SET published_us_est = published_at AT TIME ZONE 'UTC' AT TIME ZONE 'US/Eastern';
+SET 
+	published_us_est = published_at AT TIME ZONE 'UTC' AT TIME ZONE 'US/Eastern',
+	published_year = EXTRACT(YEAR FROM published_at AT TIME ZONE 'UTC' AT TIME ZONE 'US/Eastern'),
+	published_month = EXTRACT(MONTH FROM published_at AT TIME ZONE 'UTC' AT TIME ZONE 'US/Eastern'),
+	published_quarter = 'Q' || EXTRACT(QUARTER FROM published_at AT TIME ZONE 'UTC' AT TIME ZONE 'US/Eastern'),
+	published_weekday = TRIM(TO_CHAR(published_at AT TIME ZONE 'UTC' AT TIME ZONE 'US/Eastern','Day')),
+	published_hour = EXTRACT(HOUR FROM published_at AT TIME ZONE 'UTC' AT TIME ZONE 'US/Eastern');
 
 
--- Extract year from publish date
-ALTER TABLE videos_featured ADD COLUMN published_year TEXT;
-UPDATE videos_featured
-SET published_year = EXTRACT(YEAR FROM published_us_est);
 
+-- 3. Add engagement ratio features
+ALTER TABLE videos_featured 
+ADD COLUMN like_ratio FLOAT,
+ADD COLUMN comment_ratio FLOAT;
 
--- Extract month from publish date
-ALTER TABLE videos_featured ADD COLUMN published_month TEXT;
-UPDATE videos_featured
-SET published_month = EXTRACT(MONTH FROM published_us_est);
-
-
--- Extract the weekday from publish date
-ALTER TABLE videos_featured ADD COLUMN published_weekday TEXT;
-UPDATE videos_featured
-SET published_weekday = TRIM(TO_CHAR(published_us_est,'Day'));
-
-
--- Extract publish hour from publish date
-ALTER TABLE videos_featured ADD COLUMN published_hour INTEGER;
-UPDATE videos_featured
-SET published_hour = EXTRACT(HOUR FROM published_us_est);
-
-
--- 2. Add calculated column like_ratio
-ALTER TABLE videos ADD COLUMN like_ratio FLOAT;
-UPDATE videos 
+-- Compte ratios(avoid division by zero)
+UPDATE videos_featured 
 SET like_ratio = CASE
-				 	WHEN views >0 then ROUND(likes::numeric/views,2)
+				 	WHEN views >0 THEN ROUND(likes::numeric/views,4)
+				 	ELSE 0
+				 END,
+    comment_ratio = CASE
+				 	WHEN views >0 THEN ROUND(comments::numeric/views,4)
 				 	ELSE 0
 				 END;
 
 
+
+-- 4. Bucket publish hours into time-of-day categories
+ALTER TABLE videos_featured
+ADD COLUMN publish_time_of_day TEXT;
+UPDATE videos_featured
+SET publish_time_of_day = CASE
+	WHEN published_hour BETWEEN 0 AND 5 THEN 'Early Morning'
+	WHEN published_hour BETWEEN 6 AND 11 THEN 'Morning'
+	WHEN published_hour BETWEEN 12 AND 17 THEN 'Afternoon'
+	WHEN published_hour BETWEEN 18 AND 23 THEN 'Evening'
+	ELSE 'Unknown'
+END;

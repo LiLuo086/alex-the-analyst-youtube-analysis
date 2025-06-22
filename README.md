@@ -59,14 +59,19 @@ This case study showcases data analyst competencies including SQL, Python, Postg
 
 2. **Data Storage**:  
    - Stored structured data in a PostgreSQL database.
-   - Created tables: `videos`.
+   - Created tables: `raw_videos`.
 
 3. **Data Cleaning & Feature Engineering**:
-   - Convert `duration` from ISO 8601 to seconds
-   - Extract:
-     - Title length
-     - Upload weekday/hour
-     - Video type (based on title keywords)
+   - Data cleaning:
+      - Remove duplicates and nulls
+      - trim whitespace in text columns
+      - Fix data type, convert tags to text[] array
+   - Feature engineering:
+      - Convert `duration` from ISO 8601 to seconds
+      - Extract:
+      - Title length
+      - Upload weekday/hour
+      - Video type (based on title keywords)
 
 4. **Data Analysis**:  
    - Wrote SQL queries for EDA:
