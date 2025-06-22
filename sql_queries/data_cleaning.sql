@@ -10,31 +10,24 @@ SELECT * FROM videos_cleaned LIMIT 10;
 
 
 -- 3. check data type of columns
-SELECT
-	column_name, data_type
-FROM
-	information_schema.columns
-WHERE
-	table_name = 'videos_cleaned';
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'videos_cleaned';
 
 
--- 4. Check the duplicate in table videos_cleaned
-SELECT a.*
-FROM videos_cleaned a
-JOIN videos_cleaned b
-ON 
-	a.video_id = b.video_id
-WHERE
-	a.ctid < b.ctid;
--- Result: there is no duplicate
+-- 4. Check for duplicate video_ids
+SELECT video_id, COUNT(video_id)
+FROM videos_cleaned
+GROUP BY video_id
+HAVING COUNT(video_id)>1;
 
 
 -- 5. Trim whitespace in text columns
 UPDATE videos_cleaned
 SET 
-	video_id = TRIM(video_id),
-	title = TRIM(title),
-    tags = TRIM(tags);
+	video_id = TRIM(COALESCE(video_id, '')),
+	title = TRIM(COALESCE(title, '')),
+    tags = TRIM(COALESCE(tags, ''));
 	
 
 -- 6. Handle NULLs in numerical columns
@@ -45,16 +38,23 @@ SET
 	comments = COALESCE(comments,0);
 
 
-
-
-
--- 7. Convert tags to text array
+-- 7. Convert 'tags' string to text[] array
 ALTER TABLE videos_cleaned
 ADD COLUMN tags_array text[];
 
 UPDATE videos_cleaned
 SET
-	tags_array = string_to_array(REPLACE(REPLACE(REPLACE(tags, '[',''),']',''),'''',''),', '); 
+	tags_array = string_to_array(
+				  REPLACE(REPLACE(REPLACE(tags, '[',''),']',''),'''',''),
+				  ', '); 
 
+-- Verifying the changes				
+SELECT tags, tags_array FROM videos_cleaned LIMIT 10;
+
+-- drop the old column 'tags'
 ALTER TABLE videos_cleaned
 DROP COLUMN tags;
+
+
+-- 8. Check the data structure after cleaning process
+SELECT * FROM videos_cleaned LIMIT 10;
