@@ -67,12 +67,15 @@ This case study showcases data analyst competencies including SQL, Python, Postg
       - trim whitespace in text columns
       - Fix data type, convert tags to text[] array
    - Feature engineering:
-      - Convert `duration` from ISO 8601 to seconds
+      - Convert `published_at` from UTC to time zone US/EST
       - Extract:
-      - Title length
-      - Upload weekday/hour
-      - Video type (based on title keywords)
-
+      - publish year
+      - publish month
+      - publish quarter
+      - publish weekday
+      - publish hour
+      - publish time-of-day
+      
 4. **Data Analysis**:  
    - Wrote SQL queries for EDA:
      - Most viewed videos
