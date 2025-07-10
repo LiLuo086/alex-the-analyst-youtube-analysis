@@ -6,12 +6,13 @@ This project is an end-to-end data analytics case study analyzing the performanc
 
 ## 🎯 Project Objective
 
-The goal is to analyze content patterns and engagement trends to answer key questions like:
+The goal is to explore and understand performance patterns across Alex The Analyst’s YouTube videos in order to identify what factors contribute to high engagement, and guide data-driven content decisions.
 
-- What types of videos perform best?
-- How does publishing frequency affect views?
-- When is the best time to post?
-- What drives high engagement (likes, comments)?
+## Key Questions Driving the Analysis
+
+- Which days and times are best for publishing videos?
+- How does video length affect performance?
+- What are the engagement patterns based on video tags?
 
 This case study showcases data analyst competencies including SQL, Python, PostgreSQL, and Tableau.
 
@@ -75,7 +76,7 @@ This case study showcases data analyst competencies including SQL, Python, Postg
       - publish weekday
       - publish hour
       - publish time-of-day
-      
+
 4. **Data Analysis**:  
    - Wrote SQL queries for EDA:
      - Most viewed videos
