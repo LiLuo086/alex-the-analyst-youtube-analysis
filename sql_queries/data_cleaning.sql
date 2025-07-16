@@ -38,23 +38,6 @@ SET
 	comments = COALESCE(comments,0);
 
 
--- 7. Convert 'tags' string to text[] array
-ALTER TABLE videos_cleaned
-ADD COLUMN tags_array text[];
 
-UPDATE videos_cleaned
-SET
-	tags_array = string_to_array(
-				  REPLACE(REPLACE(REPLACE(tags, '[',''),']',''),'''',''),
-				  ', '); 
-
--- Verifying the changes				
-SELECT tags, tags_array FROM videos_cleaned LIMIT 10;
-
--- drop the old column 'tags'
-ALTER TABLE videos_cleaned
-DROP COLUMN tags;
-
-
--- 8. Check the data structure after cleaning process
+-- 7. Check the data structure after cleaning process
 SELECT * FROM videos_cleaned LIMIT 10;
