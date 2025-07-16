@@ -50,9 +50,9 @@ SET like_ratio = CASE
 
 -- 4. Bucket publish hours into time-of-day categories
 ALTER TABLE videos_featured
-ADD COLUMN publish_time_of_day TEXT;
+ADD COLUMN published_time_of_day TEXT;
 UPDATE videos_featured
-SET publish_time_of_day = CASE
+SET published_time_of_day = CASE
 	WHEN published_hour BETWEEN 0 AND 5 THEN 'Early Morning'
 	WHEN published_hour BETWEEN 6 AND 11 THEN 'Morning'
 	WHEN published_hour BETWEEN 12 AND 17 THEN 'Afternoon'
