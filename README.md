@@ -35,19 +35,18 @@ This case study showcases data analyst competencies including SQL, Python, Postg
 ```bash
 📂 alex-the-analyst-youtube-analysis
 ├── 📄 README.md
-├── 📜 requirements.txt  
-├── 🐍 data_collection.ipynb
-├── 🗃️ database_schema.sql
+├── 📄 requirements.txt  
+├── 📄 data_collection.ipynb
 ├── 📂 sql_queries/
-│ └── data_cleaning.sql
-│ └── eda_queries.sql
+│ └── database_schema.sql
+│ └── data_cleaning.sql 
 │ └── feature_engineering.sql
 ├── 📂 visualizations/
 │ └── alex_channel_dashboard.twbx
 ├── 📂 data/
 │ └── videos.csv
-└── 📂 reports/
-└── insights_summary.pdf
+│ └── videos_featured.csv
+└── 📄 eda.ipynb
 ```
 
 ---
@@ -60,29 +59,30 @@ This case study showcases data analyst competencies including SQL, Python, Postg
 
 2. **Data Storage**:  
    - Stored structured data in a PostgreSQL database.
-   - Created tables: `raw_videos`.
+   - Created tables: `raw_videos`, `videos_cleaned`, `videos_featured`
 
 3. **Data Cleaning & Feature Engineering**:
    - Data cleaning:
       - Remove duplicates and nulls
       - trim whitespace in text columns
-      - Fix data type, convert tags to text[] array
+      - Fix data type
    - Feature engineering:
       - Convert `published_at` from UTC to time zone US/EST
       - Extract:
-      - publish year
-      - publish month
-      - publish quarter
-      - publish weekday
-      - publish hour
-      - publish time-of-day
+         - published year
+         - published month
+         - published quarter
+         - published weekday
+         - published hour
+         - published time-of-day
+      - Bucket published hours into time-of-day categories
 
 4. **Data Analysis**:  
-   - Wrote SQL queries for EDA:
-     - Most viewed videos
-     - Engagement rate trends
-     - Performance by publish day/time
-   - Performed calculations like video age, engagement rate, and publishing intervals.
+   - Metrics normalization
+   - Statistical analysis
+   - Engagement rate trends
+   - Performance by publish day/time
+   - Performance by topic content
 
 5. **Data Visualization**:  
    - Built an interactive dashboard in Tableau to display:
