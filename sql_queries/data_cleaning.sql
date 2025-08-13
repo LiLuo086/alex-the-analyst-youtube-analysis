@@ -2,7 +2,7 @@
 
 -- 1. Copy original data for data cleaning
 CREATE TABLE videos_cleaned AS
-SELECT * FROM raw_videos;
+SELECT * FROM videos;
 
 
 -- 2. Check data structure
