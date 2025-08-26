@@ -59,3 +59,17 @@ SET published_time_of_day = CASE
 	WHEN published_hour BETWEEN 18 AND 23 THEN 'Evening'
 	ELSE 'Unknown'
 END;
+
+
+
+--  5. Add if the video is a short
+ALTER TABLE videos_featured
+ADD COLUMN is_short BOOL;
+UPDATE videos_featured
+SET is_short =CASE
+	WHEN duration_seconds <=120 THEN True
+	ELSE False
+END;
+
+
+SELECT * FROM videos_featured LIMIT 100;
