@@ -25,9 +25,10 @@ HAVING COUNT(video_id)>1;
 -- 5. Trim whitespace in text columns
 UPDATE videos_cleaned
 SET 
-	video_id = TRIM(COALESCE(video_id, '')),
-	title = TRIM(COALESCE(title, '')),
-    tags = TRIM(COALESCE(tags, ''));
+	video_id = LOWER(TRIM(COALESCE(video_id, ''))),
+	title = LOWER(TRIM(COALESCE(title, ''))),
+    tags = LOWER(TRIM(COALESCE(tags, ''))),
+	playlist_title = LOWER(TRIM(COALESCE(playlist_title, '')));
 	
 
 -- 6. Handle NULLs in numerical columns
